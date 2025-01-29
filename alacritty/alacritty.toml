@@ -1,0 +1,9 @@
+[font]
+size = 12
+[font.normal]
+family = "JetBrains Mono Nerd Font"
+
+[general]
+import = ["~/.config/alacritty/themes/themes/gruvbox_material_hard_dark.toml"]
+
+
