@@ -236,6 +236,9 @@ require 'lspconfig'.ltex.setup {
 require 'lspconfig'.ts_ls.setup {
   capabilities = capabilities
 }
+require 'lspconfig'.bashls.setup {
+  capabilities = capabilities
+}
 require 'lspconfig'.eslint.setup {
   capabilities = capabilities
 }
@@ -271,6 +274,7 @@ require("lspconfig").texlab.setup { on_attach = require("lsp-format").on_attach 
 require("lspconfig").lua_ls.setup { on_attach = require("lsp-format").on_attach }
 require("lspconfig").yamlls.setup { on_attach = require("lsp-format").on_attach }
 require("lspconfig").rust_analyzer.setup { on_attach = require("lsp-format").on_attach }
+require("lspconfig").bashls.setup { on_attach = require("lsp-format").on_attach }
 
 require 'lspconfig'.clangd.setup {
   capabilities = capabilities,

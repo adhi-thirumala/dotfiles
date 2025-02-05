@@ -1,21 +1,23 @@
 #! /bin/sh
 
 
-# turn on logging
-set -xv
-exec 2>>/tmp/bspwm.log
 
-
-
-bspc monitor eDP-1 -d 1 2 3 4 5 
-bspc monitor DP-3 -d 6 7 8 9 0
-pkill polybar
-polybar &
+if xrandr | grep "eDP-1-1"; then
+  bspc monitor eDP-1-1 -d 1 2 3 4 5
+  ~/.config/polybar/material/launch.sh
+else
+  if xrandr | grep "DP-3 connected"; then
+    bspc monitor eDP-1 -d 6 7 8 9 0
+    bspc monitor DP-3 -d 1 2 3 4 5
+  else
+    bspc monitor eDP-1 -d 1 2 3 4 5
+  fi
+  ~/.config/polybar/material/launch.sh &
+  pkill feh
+  ~/.fehbg &
+fi
 pkill sxhkd
 sxhkd &
-polybar &
-pkill feh
-~/.fehbg &
 pkill picom
 picom --config ~/.config/picom/picom.conf &
 libinput-gestures-setup start
@@ -28,8 +30,8 @@ bspc config split_ratio          0.52
 bspc config borderless_monocle   false
 bspc config gapless_monocle      true
 
-bspc config normal_border_color "#282828"
-bspc config focused_border_color "#ea6962"
+bspc config normal_border_color "#1F1F1F"
+bspc config focused_border_color "#e53935"
 
 
 bspc rule -a Gimp desktop='^8' state=floating follow=on
