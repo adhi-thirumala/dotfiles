@@ -28,12 +28,14 @@ require("lazy").setup({
     { import = "plugins" },
   },
   -- Configure any other settings here. See the documentation for more details.
-  install = { colorscheme = { "gruvbox-material" } },
+  install = { colorscheme = { "ashen" } },
   -- colorscheme that will be used when installing plugins.
   -- automatically check for plugin updates
   checker = { enabled = true },
 })
 
+require("ashen").setup()
+vim.cmd('colorscheme ashen')
 
 local function should_enable_copilot()
   local current_dir = vim.fn.getcwd()
@@ -353,7 +355,7 @@ require("codecompanion").setup({
       return require("codecompanion.adapters").extend("copilot", {
         schema = {
           model = {
-            default = "claude-3.5-sonnet",
+            default = "o3-mini-2025-01-31",
           },
         },
       })
@@ -381,5 +383,13 @@ require("codecompanion").setup({
 })
 vim.opt.termguicolors = true
 require("bufferline").setup {}
-require("devcontainer").setup {}
 require('tcss').setup()
+vim.api.nvim_set_keymap('n', '<A-Tab>', '<cmd>lua require("telescope.builtin").buffers()<CR>',
+  { noremap = true, silent = true })
+require('nvim-autopairs').setup()
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+local cmp = require('cmp')
+cmp.event:on(
+  'confirm_done',
+  cmp_autopairs.on_confirm_done()
+)
