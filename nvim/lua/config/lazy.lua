@@ -136,7 +136,7 @@ require('lualine').setup {
   extensions = {}
 }
 require 'colorizer'.setup {
-  '*',                     -- Highlight all files, but customize some others.
+  '*',                      -- Highlight all files, but customize some others.
   css = { rgb_fn = true, }, -- Enable parsing rgb(...) functions in css.
   html = { names = false, } -- Disable parsing "names" like Blue or Gray
 }
@@ -337,8 +337,8 @@ require('ibl').setup()
 require('nvim-ts-autotag').setup({
   opts = {
     -- Defaults
-    enable_close = true,        -- Auto close tags
-    enable_rename = true,       -- Auto rename pairs of tags
+    enable_close = true,          -- Auto close tags
+    enable_rename = true,         -- Auto rename pairs of tags
     enable_close_on_slash = false -- Auto close on trailing </
   },
   -- Also override individual filetype configs, these take priority.
@@ -393,3 +393,6 @@ cmp.event:on(
   'confirm_done',
   cmp_autopairs.on_confirm_done()
 )
+vim.diagnostic.config({
+  virtual_text = false,
+})
