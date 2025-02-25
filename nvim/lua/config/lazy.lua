@@ -396,3 +396,10 @@ cmp.event:on(
 vim.diagnostic.config({
   virtual_text = false,
 })
+vim.keymap.set(
+  "n",
+  "M",
+  require("lsp_lines").toggle,
+  { desc = "Toggle lsp_lines" }
+)
+vim.api.nvim_set_keymap('n', '<A-Space>', '<cmd>lua vim.lsp.buf.code_action()<CR>', { noremap = true, silent = true })

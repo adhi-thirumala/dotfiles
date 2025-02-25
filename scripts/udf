@@ -3,7 +3,7 @@
 # update all thedotfiles and then make a commit
 cd $HOME/dotfiles
 cp -r ~/.config/nvim/ ~/dotfiles/
-cp -r ~/.config/alacritty/ ~/dotfiles/
+cp -r ~/.config/kitty/ ~/dotfiles/
 cp -r ~/.config/polybar/ ~/dotfiles/
 cp -r ~/.config/rofi/ ~/dotfiles/
 cp -r ~/.config/scripts/ ~/dotfiles/
