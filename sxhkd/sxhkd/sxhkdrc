@@ -17,6 +17,8 @@ super + Escape
 super + shift + s
 	~/screenshotter.sh
 
+super + e
+  zen-browser
 
 ### Volume
 
