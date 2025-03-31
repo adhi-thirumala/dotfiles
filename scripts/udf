@@ -13,6 +13,7 @@ cp ~/.p10k.zsh ~/dotfiles/zsh/.p10k.zsh
 cp ~/.zshrc ~/dotfiles/zsh/.zshrc
 cp ~/.zlogin ~/dotfiles/zsh/.zlogin
 cp ~/.zshenv ~/dotfiles/zsh/.zshenv
+cp -r ~/.config/picom/ ~/dotfiles/
 git add --all
 git commit -m "update $(date)"
 git push
