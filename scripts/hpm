@@ -4,11 +4,11 @@
 
 if xrandr | grep "eDP-1-1"; then
   PRIMARY="eDP-1-1"
-  SECONDARY="DP-3"
+  SECONDARY="DP-0"
   xrandr --output $PRIMARY --auto --primary
   xrandr --output $SECONDARY --auto --right-of $PRIMARY
   bspc monitor eDP-1-1 -d 6 7 8 9 0
-  bspc monitor DP-3 -d 1 2 3 4 5
+  bspc monitor DP-0 -d 1 2 3 4 5
 elif xrandr | grep "DP-3 connected"; then
   PRIMARY="DP-3"
   SECONDARY="eDP-1"
