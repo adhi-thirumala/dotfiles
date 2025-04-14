@@ -33,28 +33,25 @@ require("lazy").setup({
   -- automatically check for plugin updates
   checker = { enabled = true },
 })
-
-require("ashen").setup()
-vim.cmd('colorscheme ashen')
-
+vim.g.augment_disable_completions = true
 local function should_enable_copilot()
   local current_dir = vim.fn.getcwd()
   local blocked_folders = {
-    "/home/adhi/cs128",
-    "/home/adhi/howdy-world-adhi-thirumala"
+    "/home/adhi/school"
     -- Add more paths here
   }
 
   for _, folder in ipairs(blocked_folders) do
     if vim.startswith(current_dir, folder) then
       -- Disable copilot for blocked folders
-      vim.cmd('Copilot disable')
+      vim.g.augment_disable_completions = true
       return false
     end
   end
 
+
   -- Enable copilot for all other folders
-  vim.cmd('Copilot enable')
+  vim.g.augment_disable_completions = false
   return true
 end
 
@@ -65,10 +62,9 @@ vim.api.nvim_create_autocmd({ "DirChanged" }, {
   end,
 })
 
--- Check on startup
-should_enable_copilot()
 
-
+require("ashen").setup()
+vim.cmd('colorscheme ashen')
 
 -- theme styles
 local virtual_env = function()
@@ -326,10 +322,6 @@ vim.api.nvim_set_keymap('n', '<C-A-Space>', '<cmd>lua require("telescope.builtin
   { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-A-b>', '<cmd>lua require("telescope.builtin").buffers()<CR>',
   { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-A-w>', '<cmd>:CodeCompanionActions<CR>',
-  { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-A-d>', '<cmd>:CodeCompanionChat<CR>',
-  { noremap = true, silent = true })
 
 require('ibl').setup()
 
@@ -349,38 +341,7 @@ require('nvim-ts-autotag').setup({
 
 
 -- ai section
-require("codecompanion").setup({
-  adapters = {
-    copilot = function()
-      return require("codecompanion.adapters").extend("copilot", {
-        schema = {
-          model = {
-            default = "o3-mini",
-          },
-        },
-      })
-    end,
-  },
-  strategies = {
-    chat = {
-      slash_commands = {
-        ["file"] = {
-          callback = "strategies.chat.slash_commands.file",
-          description = "Select a file using Telescope",
-          opts = {
-            provider = "telescope", -- Other options include 'default', 'mini_pick', 'fzf_lua'
-            contains_code = true,
-          },
-        },
-      },
-    },
-  },
-  display = {
-    action_palette = {
-      provider = "telescope"
-    }
-  },
-})
+
 vim.opt.termguicolors = true
 require("bufferline").setup {}
 require('tcss').setup()
