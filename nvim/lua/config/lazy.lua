@@ -1,4 +1,6 @@
 -- Bootstrap lazy.nvim
+--
+vim.g.augment_workspace_folders = { '/home/adhi/tabsort', '/home/adhi/honors-cs128' }
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = "https://github.com/folke/lazy.nvim.git"
@@ -33,36 +35,33 @@ require("lazy").setup({
   -- automatically check for plugin updates
   checker = { enabled = true },
 })
-vim.g.augment_disable_completions = true
-local function should_enable_copilot()
+local function check_completion_blacklist()
   local current_dir = vim.fn.getcwd()
   local blocked_folders = {
-    "/home/adhi/school"
-    -- Add more paths here
+    -- Add your folders here, for example:
+    "/home/adhi/school", -- uncomment and modify as needed
   }
 
   for _, folder in ipairs(blocked_folders) do
     if vim.startswith(current_dir, folder) then
-      -- Disable copilot for blocked folders
       vim.g.augment_disable_completions = true
-      return false
+      return
     end
   end
 
-
-  -- Enable copilot for all other folders
   vim.g.augment_disable_completions = false
-  return true
 end
 
 -- Set up an autocommand to check when changing directories
 vim.api.nvim_create_autocmd({ "DirChanged" }, {
   callback = function()
-    should_enable_copilot()
+    check_completion_blacklist()
   end,
 })
 
 
+-- Run the check when Neovim starts
+check_completion_blacklist()
 require("ashen").setup()
 vim.cmd('colorscheme ashen')
 
@@ -364,3 +363,18 @@ vim.keymap.set(
   { desc = "Toggle lsp_lines" }
 )
 vim.api.nvim_set_keymap('n', '<A-Space>', '<cmd>lua vim.lsp.buf.code_action()<CR>', { noremap = true, silent = true })
+-- add ctrl ald d to toggle a new augment chat and to make me start a message - its :Augment toggle-chat and :Augment start-message
+-- nnoremap <leader>ac :Augment chat<CR>
+--vnoremap <leader>ac :Augment chat<CR>
+--nnoremap <leader>an :Augment chat-new<CR>
+-- nnoremap <leader>at :Augment chat-toggle<CR>
+-- change to nvim from vim
+-- bing ctrl alt d to doing :augment chat-toggle
+vim.api.nvim_set_keymap('n', '<C-A-d>', ':Augment chat-toggle<CR>', { noremap = true, silent = true })
+-- make a keybind tojump to line  1e79ac5c-96fd-4a32-88d5-a01ebb30f0ae
+
+
+vim.api.nvim_set_keymap('n', '<C-A-m>', ':Augment chat<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-A-]>',
+  ':lua vim.g.augment_disable_completions = not vim.g.augment_disable_completions<CR>',
+  { noremap = true, silent = true })
