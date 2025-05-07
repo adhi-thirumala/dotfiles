@@ -7,6 +7,7 @@ cp -r ~/.config/kitty/ ~/dotfiles/
 cp -r ~/.config/polybar/ ~/dotfiles/
 cp -r ~/.config/rofi/ ~/dotfiles/
 cp -r ~/.config/scripts/ ~/dotfiles/
+cp -r ~/.config/bspwm/ ~/dotfiles/
 cp -r ~/.config/libinput-gestures.conf ~/dotfiles/libinput-gestures.conf
 cp -r ~/.config/sxhkd/ ~/dotfiles/sxhkd/
 cp ~/.p10k.zsh ~/dotfiles/zsh/.p10k.zsh
