@@ -1,14 +1,31 @@
 #! /bin/sh
 
 # hotsplug monitors
+DEFAULT_DP="DP-3"
+DP_NUM=""
+
+# Parse command line arguments
+while getopts "m:" opt; do
+  case $opt in
+    m) DP_NUM="$OPTARG" ;;
+    *) echo "Usage: $0 [-m number]" >&2; exit 1 ;;
+  esac
+done
+
+# Set the DP port based on command line argument
+if [ -n "$DP_NUM" ]; then
+  SECONDARY_DP="DP-$DP_NUM"
+else
+  SECONDARY_DP="$DEFAULT_DP"
+fi
 
 if xrandr | grep "eDP-1-1"; then
   PRIMARY="eDP-1-1"
-  SECONDARY="DP-0"
+  SECONDARY="$SECONDARY_DP"
   xrandr --output $PRIMARY --auto --primary
   xrandr --output $SECONDARY --auto --right-of $PRIMARY
   bspc monitor eDP-1-1 -d 6 7 8 9 0
-  bspc monitor DP-0 -d 1 2 3 4 5
+  bspc monitor $SECONDARY -d 1 2 3 4 5
 elif xrandr | grep "DP-2 connected"; then
   PRIMARY="DP-2"
   SECONDARY="eDP-1"
@@ -22,4 +39,3 @@ fi
 
 ~/.fehbg
 ~/.config/polybar/material/launch.sh
-
