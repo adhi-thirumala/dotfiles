@@ -15,27 +15,27 @@ done
 # Set the DP port based on command line argument
 if [ -n "$DP_NUM" ]; then
   SECONDARY_DP="DP-$DP_NUM"
+  echo "Using DP-$DP_NUM as secondary monitor"
 else
   SECONDARY_DP="$DEFAULT_DP"
 fi
 
 if xrandr | grep "eDP-1-1"; then
   PRIMARY="eDP-1-1"
-  SECONDARY="$SECONDARY_DP"
   xrandr --output $PRIMARY --auto --primary
-  xrandr --output $SECONDARY --auto --right-of $PRIMARY
+  xrandr --output $SECONDARY_DP --auto --right-of $PRIMARY
   bspc monitor eDP-1-1 -d 6 7 8 9 0
-  bspc monitor $SECONDARY -d 1 2 3 4 5
-elif xrandr | grep "DP-2 connected"; then
-  PRIMARY="DP-2"
+  bspc monitor $SECONDARY_DP -d 1 2 3 4 5
+elif xrandr | grep "$SECONDARY_DP connected"; then
+  PRIMARY="$SECONDARY_DP"
   SECONDARY="eDP-1"
   xrandr --output $PRIMARY --auto --primary
   xrandr --output $SECONDARY --auto --left-of $PRIMARY
-  bspc monitor eDP-1 -d 1 2 3 4 5
-  bspc monitor DP-2 -d 6 7 8 9 0
+  bspc monitor $PRIMARY -d 1 2 3 4 5
+  bspc monitor $SECONDARY -d 6 7 8 9 0
 else
   echo "No external monitor detected"
 fi
 
 ~/.fehbg
-~/.config/polybar/material/launch.sh
+~/.config/polybar/material/launch.sh -m $DP_NUM

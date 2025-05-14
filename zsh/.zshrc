@@ -126,3 +126,6 @@ alias help='gh copilot suggest'
 # This section can be safely removed at any time if needed.
 [[ ! -r '/home/adhi/.opam/opam-init/init.zsh' ]] || source '/home/adhi/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
 # END opam configuration
+#
+# GEMINI API KEY CONFIG FOR AIDER
+source ~/.gemini_api.zsh
