@@ -12,6 +12,7 @@ pkill wireplumber
 
 if xrandr | grep "eDP-1-1"; then
   bspc monitor eDP-1-1 -d 1 2 3 4 5 &
+  hpm -m 2
 else
   if xrandr | grep "DP-3 connected"; then
     bspc monitor eDP-1 -d 6 7 8 9 0 &
@@ -22,10 +23,10 @@ else
 fi
 ~/.config/polybar/material/launch.sh &
 bspc config border_width         2
-bspc config window_gap          6
+bspc config window_gap          0
 
 bspc config split_ratio          0.52
-bspc config borderless_monocle   false
+bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 
 bspc config normal_border_color "#1F1F1F"

@@ -26,10 +26,9 @@ while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 if xrandr | grep "eDP-1-1"; then
     MONITOR=DP-$monitor polybar --reload main -c "$DIR"/config.ini &
     MONITOR=eDP-1-1 polybar --reload secondary -c "$DIR"/config.ini &
-  elif xrandr | grep -E "DP-[0-9]+ connected"; then
+  elif xrandr | grep -E "DP-$monitor connected"; then
     MONITOR=DP-$monitor polybar --reload main -c "$DIR"/config.ini &
     MONITOR=eDP-1 polybar --reload secondary -c "$DIR"/config.ini &
   else
-    MONITOR=eDP-1 polybar --reload secondary -c "$DIR"/config.ini &
     polybar --reload main -c "$DIR"/config.ini &
 fi
