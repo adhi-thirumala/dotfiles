@@ -248,6 +248,9 @@ require 'lspconfig'.rust_analyzer.setup {
 require 'lspconfig'.nil_ls.setup {
   capabilities = capabilities
 }
+require 'lspconfig'.cmake.setup {
+  capabilities = capabilities
+}
 local on_attach_ocaml = function(client, bufnr)
   -- Enable formatting on save
   require("lsp-format").on_attach(client, bufnr)
@@ -276,7 +279,7 @@ require("lspconfig").yamlls.setup { on_attach = require("lsp-format").on_attach 
 require("lspconfig").rust_analyzer.setup { on_attach = require("lsp-format").on_attach }
 require("lspconfig").bashls.setup { on_attach = require("lsp-format").on_attach }
 require("lspconfig").nil_ls.setup { on_attach = require("lsp-format").on_attach }
-
+require("lspconfig").cmake.setup { on_attach = require("lsp-format").on_attach }
 require 'lspconfig'.clangd.setup {
   capabilities = capabilities,
   cmd = {
