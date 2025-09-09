@@ -40,6 +40,7 @@ local function check_completion_blacklist()
   local blocked_folders = {
     -- Add your folders here, for example:
     "/home/adhi/school", -- uncomment and modify as needed
+    "/home/adhi/codeforces",
   }
 
   for _, folder in ipairs(blocked_folders) do
@@ -251,6 +252,14 @@ require 'lspconfig'.nil_ls.setup {
 require 'lspconfig'.cmake.setup {
   capabilities = capabilities
 }
+require 'lspconfig'.matlab_ls.setup {
+  capabilities = capabilities
+}
+require 'lspconfig'.tinymist.setup {
+  capabilities = capabilities
+}
+
+
 local on_attach_ocaml = function(client, bufnr)
   -- Enable formatting on save
   require("lsp-format").on_attach(client, bufnr)
@@ -280,6 +289,8 @@ require("lspconfig").rust_analyzer.setup { on_attach = require("lsp-format").on_
 require("lspconfig").bashls.setup { on_attach = require("lsp-format").on_attach }
 require("lspconfig").nil_ls.setup { on_attach = require("lsp-format").on_attach }
 require("lspconfig").cmake.setup { on_attach = require("lsp-format").on_attach }
+require("lspconfig").matlab_ls.setup { on_attach = require("lsp-format").on_attach }
+require("lspconfig").tinymist.setup { on_attach = require("lsp-format").on_attach }
 require 'lspconfig'.clangd.setup {
   capabilities = capabilities,
   cmd = {
@@ -289,7 +300,8 @@ require 'lspconfig'.clangd.setup {
     "--header-insertion=iwyu",
     "--completion-style=detailed",
     "--function-arg-placeholders",
-    "--fallback-style=Google"
+    "--fallback-style=Google",
+    "--compile-commands-dir=./"
   },
   on_attach = require("lsp-format").on_attach
 }
@@ -385,3 +397,7 @@ vim.api.nvim_set_keymap('n', '<C-A-m>', ':Augment chat<CR>', { noremap = true, s
 vim.api.nvim_set_keymap('n', '<C-A-]>',
   ':lua vim.g.augment_disable_completions = not vim.g.augment_disable_completions<CR>',
   { noremap = true, silent = true })
+
+
+--toggle terminal
+require("toggleterm").setup()
