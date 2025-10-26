@@ -1,6 +1,4 @@
 -- Bootstrap lazy.nvim
---
-vim.g.augment_workspace_folders = { '/home/adhi/tabsort', '/home/adhi/honors-cs128' }
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = "https://github.com/folke/lazy.nvim.git"
@@ -19,8 +17,6 @@ vim.opt.rtp:prepend(lazypath)
 -- Make sure to setup `mapleader` and `maplocalleader` before
 -- loading lazy.nvim so that mappings are correct.
 -- This is also a good place to setup other settings (vim.opt)
-vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
 vim.cmd('set number')
 vim.cmd('set rnu')
 -- Setup lazy.nvim
@@ -30,41 +26,13 @@ require("lazy").setup({
     { import = "plugins" },
   },
   -- Configure any other settings here. See the documentation for more details.
-  install = { colorscheme = { "ashen" } },
   -- colorscheme that will be used when installing plugins.
   -- automatically check for plugin updates
   checker = { enabled = true },
 })
-local function check_completion_blacklist()
-  local current_dir = vim.fn.getcwd()
-  local blocked_folders = {
-    -- Add your folders here, for example:
-    "/home/adhi/school", -- uncomment and modify as needed
-    "/home/adhi/codeforces",
-  }
-
-  for _, folder in ipairs(blocked_folders) do
-    if vim.startswith(current_dir, folder) then
-      vim.g.augment_disable_completions = true
-      return
-    end
-  end
-
-  vim.g.augment_disable_completions = false
-end
-
--- Set up an autocommand to check when changing directories
-vim.api.nvim_create_autocmd({ "DirChanged" }, {
-  callback = function()
-    check_completion_blacklist()
-  end,
-})
-
-
--- Run the check when Neovim starts
-check_completion_blacklist()
 require("ashen").setup()
 vim.cmd('colorscheme ashen')
+
 
 -- theme styles
 local virtual_env = function()
@@ -139,6 +107,8 @@ require 'colorizer'.setup {
 -- profile escalation
 vim.cmd('cmap w!! w !sudo tee "%"')
 -- nvim-tree
+--
+--
 require 'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all" (the listed parsers MUST always be installed)
   ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline" },
@@ -163,14 +133,6 @@ require 'nvim-treesitter.configs'.setup {
     -- the name of the parser)
     -- list of language that will be disabled
     -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
-    disable = function(lang, buf)
-      local max_filesize = 100 * 1024 -- 100 KB
-      local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
-      if ok and stats and stats.size > max_filesize then
-        return true
-      end
-    end,
-
     -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
     -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
     -- Using this option may slow down your editor, and you may see some duplicate highlights.
@@ -187,135 +149,25 @@ require 'nvim-treesitter.configs'.setup {
     },
   },
 }
-require("mason").setup()
-require("mason-lspconfig").setup()
-local cmp = require 'cmp'
-require 'cmp'.setup {
-  sources = {
-    { name = 'nvim_lsp' }
-  },
-  mapping = cmp.mapping.preset.insert({
-    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.abort(),
-    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-  }),
-}
-local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-cmp.event:on(
-  'confirm_done',
-  cmp_autopairs.on_confirm_done()
-)
--- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
 -- make tab length two spaces for all lsp servers
-local o = vim.o
-
-o.expandtab = true
-o.smartindent = true
-o.tabstop = 2
-o.shiftwidth = 2
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-require 'lspconfig'.pyright.setup {
-  capabilities = capabilities
-}
-require 'lspconfig'.texlab.setup {
-  capabilities = capabilities
-}
-require 'lspconfig'.lua_ls.setup {
-  capabilities = capabilities
-}
-require 'lspconfig'.yamlls.setup {
-  capabilities = capabilities
-}
-require 'lspconfig'.ltex.setup {
-  capabilities = capabilities
-}
-require 'lspconfig'.ts_ls.setup {
-  capabilities = capabilities
-}
-require 'lspconfig'.bashls.setup {
-  capabilities = capabilities
-}
-require 'lspconfig'.eslint.setup {
-  capabilities = capabilities
-}
-require 'lspconfig'.autotools_ls.setup {
-  capabilities = capabilities
-}
-require 'lspconfig'.rust_analyzer.setup {
-  capabilities = capabilities
-}
-require 'lspconfig'.nil_ls.setup {
-  capabilities = capabilities
-}
-require 'lspconfig'.cmake.setup {
-  capabilities = capabilities
-}
-require 'lspconfig'.matlab_ls.setup {
-  capabilities = capabilities
-}
-require 'lspconfig'.tinymist.setup {
-  capabilities = capabilities
-}
+local options = vim.o
+options.expandtab = true
+options.smartindent = true
+options.tabstop = 2
+options.shiftwidth = 2
 
 
-local on_attach_ocaml = function(client, bufnr)
-  -- Enable formatting on save
-  require("lsp-format").on_attach(client, bufnr)
-
-  -- Add any OCaml-specific keymaps or settings here
-  local opts = { noremap = true, silent = true, buffer = bufnr }
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-  vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, opts)
-end
-
-require('lspconfig').ocamllsp.setup {
-  capabilities = capabilities,
-  on_attach = on_attach_ocaml,
-  filetypes = { "ocaml", "ocaml.menhir", "ocaml.interface", "ocaml.ocamllex", "reason", "dune" }
-}
-require 'lspconfig'.gopls.setup {
-  capabilities = capabilities,
-}
-require("lsp-format").setup {}
-
-require("lspconfig").pyright.setup { on_attach = require("lsp-format").on_attach }
-require("lspconfig").texlab.setup { on_attach = require("lsp-format").on_attach }
-require("lspconfig").lua_ls.setup { on_attach = require("lsp-format").on_attach }
-require("lspconfig").yamlls.setup { on_attach = require("lsp-format").on_attach }
-require("lspconfig").rust_analyzer.setup { on_attach = require("lsp-format").on_attach }
-require("lspconfig").bashls.setup { on_attach = require("lsp-format").on_attach }
-require("lspconfig").nil_ls.setup { on_attach = require("lsp-format").on_attach }
-require("lspconfig").cmake.setup { on_attach = require("lsp-format").on_attach }
-require("lspconfig").matlab_ls.setup { on_attach = require("lsp-format").on_attach }
-require("lspconfig").tinymist.setup { on_attach = require("lsp-format").on_attach }
-require 'lspconfig'.clangd.setup {
-  capabilities = capabilities,
-  cmd = {
-    "clangd",
-    "--background-index",
-    "--clang-tidy",
-    "--header-insertion=iwyu",
-    "--completion-style=detailed",
-    "--function-arg-placeholders",
-    "--fallback-style=Google",
-    "--compile-commands-dir=./"
-  },
-  on_attach = require("lsp-format").on_attach
-}
-require("lspconfig").html.setup { on_attach = require("lsp-format").on_attach }
-require("lspconfig").ltex.setup { on_attach = require("lsp-format").on_attach }
-require("lspconfig").gopls.setup { on_attach = require("lsp-format").on_attach }
-require("lspconfig").eslint.setup { on_attach = require("lsp-format").on_attach }
-require("lspconfig").autotools_ls.setup { on_attach = require("lsp-format").on_attach }
 
 
+
+
+
+
+
+vim.keymap.set('n', '<Leader>f', vim.lsp.buf.format, { desc = 'Format buffer' })
 
 
 -- formatter.nvim config that uses default LSP to format on save and uses 2 spces instead of tabs
-local builtin = require('telescope.builtin')
 require('telescope').setup {
   pickers = {
     -- Default configuration for builtin pickers goes here:
@@ -336,8 +188,7 @@ require('telescope').setup {
 }
 
 -- map ctrl alt space to telescope
-vim.api.nvim_set_keymap('n', '<C-A-Space>', '<cmd>lua require("telescope.builtin").find_files()<CR>',
-  { noremap = true, silent = true })
+vim.keymap.set('n', '<Leader><Leader>', require('telescope.builtin').find_files, { desc = 'Find Files' })
 vim.api.nvim_set_keymap('n', '<C-A-b>', '<cmd>lua require("telescope.builtin").buffers()<CR>',
   { noremap = true, silent = true })
 
@@ -356,6 +207,8 @@ require('nvim-ts-autotag').setup({
   -- doesn't work well in a specific filetype
 })
 -- If you want insert `(` after select function or method item
+-- sdf
+
 
 
 -- ai section
@@ -365,13 +218,6 @@ require("bufferline").setup {}
 require('tcss').setup()
 vim.api.nvim_set_keymap('n', '<A-Tab>', '<cmd>lua require("telescope.builtin").buffers()<CR>',
   { noremap = true, silent = true })
-require('nvim-autopairs').setup()
-cmp_autopairs = require('nvim-autopairs.completion.cmp')
-cmp = require('cmp')
-cmp.event:on(
-  'confirm_done',
-  cmp_autopairs.on_confirm_done()
-)
 vim.diagnostic.config({
   virtual_text = false,
 })
