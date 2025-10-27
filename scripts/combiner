@@ -1,0 +1,68 @@
+#!/usr/bin/env -S uv run
+# /// script
+# requires-python = ">=3.10"
+# dependencies = [
+#     "pypdf",
+# ]
+# ///
+
+import sys
+from pathlib import Path
+from pypdf import PdfWriter
+
+def combine_pdfs(input_files: list[str], output_file: str = "combined.pdf"):
+    """Combine multiple PDF files into a single PDF."""
+    if not input_files:
+        print("Error: No input PDF files provided", file=sys.stderr)
+        sys.exit(1)
+
+    writer = PdfWriter()
+
+    for pdf_file in input_files:
+        pdf_path = Path(pdf_file)
+        if not pdf_path.exists():
+            print(f"Error: File not found: {pdf_file}", file=sys.stderr)
+            sys.exit(1)
+
+        if not pdf_path.suffix.lower() == '.pdf':
+            print(f"Warning: Skipping non-PDF file: {pdf_file}", file=sys.stderr)
+            continue
+
+        print(f"Adding: {pdf_file}")
+        writer.append(str(pdf_path))
+
+    if len(writer.pages) == 0:
+        print("Error: No valid PDF files to combine", file=sys.stderr)
+        sys.exit(1)
+
+    print(f"\nWriting combined PDF to: {output_file}")
+    writer.write(output_file)
+    print(f"Successfully combined {len(input_files)} PDFs into {output_file}")
+    print(f"Total pages: {len(writer.pages)}")
+
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("Usage: combine_pdfs.py <pdf1> <pdf2> ... [output.pdf]")
+        print("\nExamples:")
+        print("  combine_pdfs.py file1.pdf file2.pdf file3.pdf")
+        print("  combine_pdfs.py file1.pdf file2.pdf -o merged.pdf")
+        sys.exit(1)
+
+    # Check if -o or --output flag is used
+    output_file = "combined.pdf"
+    input_files = []
+
+    i = 1
+    while i < len(sys.argv):
+        if sys.argv[i] in ["-o", "--output"]:
+            if i + 1 < len(sys.argv):
+                output_file = sys.argv[i + 1]
+                i += 2
+            else:
+                print("Error: -o/--output requires a filename", file=sys.stderr)
+                sys.exit(1)
+        else:
+            input_files.append(sys.argv[i])
+            i += 1
+
+    combine_pdfs(input_files, output_file)
