@@ -130,3 +130,5 @@ alias help='gh copilot suggest'
 # GEMINI API KEY CONFIG FOR AIDER
 source ~/.gemini_api.zsh
 export PATH=$PATH:/home/adhi/.nix-profile/bin
+export GPG_TTY=$(tty)
+

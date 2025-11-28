@@ -235,14 +235,9 @@ vim.api.nvim_set_keymap('n', '<A-Space>', '<cmd>lua vim.lsp.buf.code_action()<CR
 -- nnoremap <leader>at :Augment chat-toggle<CR>
 -- change to nvim from vim
 -- bing ctrl alt d to doing :augment chat-toggle
-vim.api.nvim_set_keymap('n', '<C-A-d>', ':Augment chat-toggle<CR>', { noremap = true, silent = true })
 -- make a keybind tojump to line  1e79ac5c-96fd-4a32-88d5-a01ebb30f0ae
 
 
-vim.api.nvim_set_keymap('n', '<C-A-m>', ':Augment chat<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-A-]>',
-  ':lua vim.g.augment_disable_completions = not vim.g.augment_disable_completions<CR>',
-  { noremap = true, silent = true })
 
 
 --toggle terminal
