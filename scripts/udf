@@ -10,6 +10,7 @@ cp -r ~/.config/scripts/ ~/dotfiles/
 cp -r ~/.config/bspwm/ ~/dotfiles/
 cp -r ~/.config/libinput-gestures.conf ~/dotfiles/libinput-gestures.conf
 cp -r ~/.config/sxhkd/ ~/dotfiles/sxhkd/
+cp -r ~/.config/bat/ ~/dotfiles/bat/
 cp ~/.p10k.zsh ~/dotfiles/zsh/.p10k.zsh
 cp ~/.zshrc ~/dotfiles/zsh/.zshrc
 cp ~/.zlogin ~/dotfiles/zsh/.zlogin
