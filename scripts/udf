@@ -16,6 +16,7 @@ cp ~/.zshrc ~/dotfiles/zsh/.zshrc
 cp ~/.zlogin ~/dotfiles/zsh/.zlogin
 cp ~/.zshenv ~/dotfiles/zsh/.zshenv
 cp -r ~/.config/picom/ ~/dotfiles/
+cp -r ~/.config/zed/ ~/zed/
 git add --all
 git commit -m "update $(date)"
 git push
