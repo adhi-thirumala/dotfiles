@@ -132,3 +132,6 @@ source ~/.gemini_api.zsh
 export PATH=$PATH:/home/adhi/.nix-profile/bin
 export GPG_TTY=$(tty)
 
+
+# opencode
+export PATH=/home/adhi/.opencode/bin:$PATH
