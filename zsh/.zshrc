@@ -135,3 +135,4 @@ export GPG_TTY=$(tty)
 
 # opencode
 export PATH=/home/adhi/.opencode/bin:$PATH
+alias ls='exa --color=always --group-directories-first'
