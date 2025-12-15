@@ -45,6 +45,11 @@ vim.keymap.set({ 'i', 's' }, '<S-Tab>', function()
   end
 end, { expr = true })
 
+-- code actions to g .
+vim.keymap.set('n', 'g.', function()
+  return '<Cmd>lua vim.lsp.buf.code_action()<CR>'
+end, { expr = true })
+
 
 
 
