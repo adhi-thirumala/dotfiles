@@ -153,8 +153,8 @@ require 'nvim-treesitter.configs'.setup {
 local options = vim.o
 options.expandtab = true
 options.smartindent = true
-options.tabstop = 2
-options.shiftwidth = 2
+options.tabstop = 4
+options.shiftwidth = 4
 
 
 

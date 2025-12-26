@@ -285,3 +285,8 @@ fi
 # To initialize zoxide, add this to your shell configuration file (usually ~/.zshrc):
 #
 # eval "$(zoxide init zsh)"
+#
+#
+#
+export PATH=$PATH:/home/adhi/.local/share/JetBrains/Toolbox/scripts
+
