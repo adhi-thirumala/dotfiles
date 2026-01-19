@@ -8,7 +8,8 @@ local function check_and_disable_codeium()
     local cwd = vim.fn.getcwd()
 
     for _, dir in ipairs(disabled_dirs) do
-        if cwd:find(dir, 1, true) then
+        local expanded_dir = vim.fn.expand(dir)
+        if cwd:find(expanded_dir, 1, true) then
             vim.cmd("CodeiumDisable")
             break
         end

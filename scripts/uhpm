@@ -1,0 +1,50 @@
+#!/bin/sh
+
+# unhotplug monitors - move all workspaces to internal display and remove external monitors
+
+# Determine the internal monitor name
+if xrandr | grep -q "eDP-1-1 connected"; then
+  INTERNAL="eDP-1-1"
+elif xrandr | grep -q "eDP-1 connected"; then
+  INTERNAL="eDP-1"
+else
+  echo "No internal display found"
+  exit 1
+fi
+
+echo "Using $INTERNAL as internal display"
+
+# Get list of all monitors bspwm knows about
+MONITORS=$(bspc query -M --names)
+
+# Move all desktops from external monitors to internal
+for mon in $MONITORS; do
+  if [ "$mon" != "$INTERNAL" ]; then
+    echo "Moving desktops from $mon to $INTERNAL"
+    # Get all desktops on this external monitor
+    DESKTOPS=$(bspc query -D -m "$mon" --names 2>/dev/null)
+    for desktop in $DESKTOPS; do
+      echo "  Moving desktop $desktop"
+      bspc desktop "$desktop" --to-monitor "$INTERNAL"
+    done
+    # Remove the monitor from bspwm
+    echo "Removing monitor $mon from bspwm"
+    bspc monitor "$mon" -r
+  fi
+done
+
+# Turn off all external displays with xrandr
+for output in $(xrandr | grep " connected" | grep -v "$INTERNAL" | cut -d' ' -f1); do
+  echo "Disabling output $output"
+  xrandr --output "$output" --off
+done
+
+# Make sure internal is primary and on
+xrandr --output "$INTERNAL" --auto --primary
+
+# Reorder desktops on internal monitor (optional - puts them in order)
+bspc monitor "$INTERNAL" -d 1 2 3 4 5 6 7 8 9 0
+
+# Refresh background and polybar
+~/.fehbg
+~/.config/polybar/material/launch.sh

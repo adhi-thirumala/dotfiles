@@ -14,7 +14,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
             -- Optional: trigger autocompletion on EVERY keypress. May be slow!
             -- local chars = {}; for i = 32, 126 do table.insert(chars, string.char(i)) end
             -- client.server_capabilities.completionProvider.triggerCharacters = chars
-            vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
+            vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = false })
         end
         -- Auto-format ("lint") on save.
         -- Usually not needed if server supports "textDocument/willSaveWaitUntil".
@@ -69,7 +69,22 @@ cmp.setup({
         -- { name = 'snippy' }, -- For snippy users.
     }, {
         { name = 'buffer' },
-    })
+    }),
+    matching = {
+        disallow_symbol_nonprefix_matching = false,
+    },
+    sorting = {
+        priority_weight = 2,
+        comparators = {
+            cmp.config.compare.offset,
+            cmp.config.compare.exact,
+            cmp.config.compare.score,
+            cmp.config.compare.kind,
+            cmp.config.compare.sort_text,
+            cmp.config.compare.length,
+            cmp.config.compare.order,
+        }
+    }
 })
 
 -- To use git you need to install the plugin petertriho/cmp-git and uncomment lines below
@@ -109,6 +124,13 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 vim.keymap.set('n', 'g.', function()
     return '<Cmd>lua vim.lsp.buf.code_action()<CR>'
 end, { expr = true })
+
+vim.keymap.set("n", "<leader>m", function()
+    -- Toggles inlay hints for the current buffer
+    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = 0 }), { bufnr = 0 })
+end, { desc = "Toggle LSP Inlay Hints" })
+
+
 
 
 
