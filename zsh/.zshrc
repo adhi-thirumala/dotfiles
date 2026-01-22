@@ -290,3 +290,7 @@ fi
 #
 export PATH=$PATH:/home/adhi/.local/share/JetBrains/Toolbox/scripts
 
+export PATH=$PATH:/home/adhi/.config/private-scripts/
+
+alias ssh='kitty +kitten ssh'
+
