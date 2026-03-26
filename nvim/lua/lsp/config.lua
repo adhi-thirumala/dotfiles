@@ -9,13 +9,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
         if client:supports_method('textDocument/implementation') then
             vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, { buffer = args.buf })
         end
-        -- Enable auto-completion. Note: Use CTRL-Y to select an item. |complete_CTRL-Y|
-        if client:supports_method('textDocument/completion') then
-            -- Optional: trigger autocompletion on EVERY keypress. May be slow!
-            -- local chars = {}; for i = 32, 126 do table.insert(chars, string.char(i)) end
-            -- client.server_capabilities.completionProvider.triggerCharacters = chars
-            vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = false })
-        end
+        -- Completion is handled by nvim-cmp + cmp-nvim-lsp, so we do NOT
+        -- enable the native vim.lsp.completion here (they conflict).
         -- Auto-format ("lint") on save.
         -- Usually not needed if server supports "textDocument/willSaveWaitUntil".
         if not client:supports_method('textDocument/willSaveWaitUntil')
@@ -125,6 +120,10 @@ vim.keymap.set('n', 'g.', function()
     return '<Cmd>lua vim.lsp.buf.code_action()<CR>'
 end, { expr = true })
 
+vim.keymap.set('n', "<leader>k", function()
+    return '<Cmd>Telescope diagnostics<CR>'
+end, { expr = true })
+
 vim.keymap.set("n", "<leader>m", function()
     -- Toggles inlay hints for the current buffer
     vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = 0 }), { bufnr = 0 })
@@ -160,6 +159,21 @@ vim.lsp.config('rust_analyzer', {
 })
 
 
+vim.lsp.config('ocamllsp', {
+    capabilities = capabilities
+})
+
+-- Register filetypes that Neovim doesn't detect by default (needed for ocamllsp)
+vim.filetype.add({
+    extension = {
+        mli = 'ocamlinterface',
+        mll = 'ocamllex',
+        mly = 'menhir',
+        re = 'reason',
+        rei = 'reason',
+    },
+})
+
 --enable everything
 vim.lsp.enable('ty')
 vim.lsp.enable('ruff')
@@ -170,3 +184,4 @@ vim.lsp.enable('clangd')
 vim.lsp.enable('rust_analyzer')
 vim.lsp.enable('tinymist')
 vim.lsp.enable('svelte')
+vim.lsp.enable('ocamllsp')
