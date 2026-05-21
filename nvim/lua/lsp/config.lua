@@ -174,14 +174,31 @@ vim.filetype.add({
     },
 })
 
+vim.lsp.config('oxlint', {
+    cmd = { 'oxlint', '--lsp' },
+    filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
+    root_markers = { 'oxlint.config.json', '.oxlintrc.json', 'package.json', '.git' },
+    capabilities = capabilities,
+})
+
+vim.lsp.config('vtsls', {
+    on_attach = function(client)
+        client.server_capabilities.documentFormattingProvider = false
+        client.server_capabilities.documentRangeFormattingProvider = false
+    end,
+})
+
 --enable everything
 vim.lsp.enable('ty')
 vim.lsp.enable('ruff')
 vim.lsp.enable('lua_ls')
-vim.lsp.enable('ts_ls')
+vim.lsp.enable('vtsls')
 vim.lsp.enable('typst_lsp')
 vim.lsp.enable('clangd')
 vim.lsp.enable('rust_analyzer')
 vim.lsp.enable('tinymist')
 vim.lsp.enable('svelte')
 vim.lsp.enable('ocamllsp')
+vim.lsp.enable('oxlint')
+vim.lsp.enable('oxfmt')
+vim.lsp.enable('hls')

@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd ~/.config/niri
+case "${1:-}" in
+    docked) ln -sfn docked.kdl mode.kdl; echo "Switched to docked. Restarting niri..."; niri msg action quit ;;
+    mobile) ln -sfn mobile.kdl mode.kdl; echo "Switched to mobile. Restarting niri..."; niri msg action quit ;;
+    status) readlink mode.kdl ;;
+    *) echo "usage: niri-mode {docked|mobile|status}"; exit 1 ;;
+esac

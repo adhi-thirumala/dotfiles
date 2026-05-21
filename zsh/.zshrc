@@ -6827,3 +6827,16 @@ if [ "$funcstack[1]" = "_warp-cli" ]; then
 else
     compdef _warp-cli warp-cli
 fi
+
+alias lg=lazygit
+alias ns==niri-session
+export MAKEFLAGS="--jobs=$(nproc)"
+alias c=cargo
+alias cb="cargo build"
+alias cr="cargo run"
+alias ct="cargo test"
+alias cbr="cargo build --release"
+alias ctr="cargo test --release"
+alias crr="cargo run --release"
+alias cch="cargo check"
+eval "$(direnv hook zsh)"

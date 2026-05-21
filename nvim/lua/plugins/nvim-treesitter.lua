@@ -1,3 +1,19 @@
 return {
-	'nvim-treesitter/nvim-treesitter',
+    "nvim-treesitter/nvim-treesitter",
+    branch = "main",
+    build = ":TSUpdate",
+    lazy = false,
+    config = function()
+        require("nvim-treesitter").setup({})
+        require("nvim-treesitter").install({
+            "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline",
+        })
+
+        -- Enable treesitter highlighting for all filetypes
+        vim.api.nvim_create_autocmd("FileType", {
+            callback = function()
+                pcall(vim.treesitter.start)
+            end,
+        })
+    end,
 }
