@@ -8,6 +8,8 @@ cp -r ~/.config/polybar/ ~/dotfiles/
 cp -r ~/.config/rofi/ ~/dotfiles/
 cp -r ~/.config/scripts/ ~/dotfiles/
 cp -r ~/.config/bspwm/ ~/dotfiles/
+cp -r ~/.config/niri/ ~/dotfiles/
+cp -r ~/.config/waybar/ ~/dotfiles/
 cp -r ~/.config/libinput-gestures.conf ~/dotfiles/libinput-gestures.conf
 cp -r ~/.config/sxhkd/ ~/dotfiles/sxhkd/
 cp -r ~/.config/bat/ ~/dotfiles/bat/
@@ -15,6 +17,8 @@ cp ~/.p10k.zsh ~/dotfiles/zsh/.p10k.zsh
 cp ~/.zshrc ~/dotfiles/zsh/.zshrc
 cp ~/.zlogin ~/dotfiles/zsh/.zlogin
 cp ~/.zshenv ~/dotfiles/zsh/.zshenv
+cp ~/.gitconfig ~/dotfiles/.gitconfig
+cp -r ~/.config/lazygit/ ~/dotfiles
 cp -r ~/.config/picom/ ~/dotfiles/
 cp -r ~/.config/zed/ ~/zed/
 git add --all

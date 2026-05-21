@@ -1,0 +1,9 @@
+// niri config entry point.
+// Real settings live in the included files.
+//   common.kdl   shared across modes (input, layout, binds, window-rules, ...)
+//   mode.kdl     symlink -> mobile.kdl or docked.kdl
+//                Switch with: ~/.config/scripts/niri-mode {mobile|docked|status}
+//
+// Original monolithic config is kept as config.kdl.bak.<timestamp>.
+include "common.kdl"
+include "mode.kdl"

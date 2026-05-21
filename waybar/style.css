@@ -1,0 +1,189 @@
+/* Ashen Theme Colors */
+@define-color bg #121212;
+@define-color fg #d5d5d5;
+@define-color grey #949494;
+@define-color red_ember #B14242;
+@define-color red_glowing #DF6464;
+@define-color orange_glow #D87C4A;
+@define-color orange_blaze #C4693D;
+@define-color orange_smolder #E49A44;
+@define-color green #629c7d;
+
+* {
+  font-size: 15px;
+  font-family: "Google Sans Code";
+}
+window#waybar {
+  all: unset;
+}
+.modules-left {
+  padding: 7px;
+  margin: 10 0 5 10;
+  border-radius: 10px;
+  background: alpha(@bg, 0.6);
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.6);
+}
+.modules-center {
+  padding: 7px;
+  margin: 10 0 5 0;
+  border-radius: 10px;
+  background: alpha(@bg, 0.6);
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.6);
+}
+.modules-right {
+  padding: 7px;
+  margin: 10 10 5 0;
+  border-radius: 10px;
+  background: alpha(@bg, 0.6);
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.6);
+}
+tooltip {
+  background: @bg;
+  color: @fg;
+}
+#clock:hover,
+#custom-pacman:hover,
+#custom-notification:hover,
+#bluetooth:hover,
+#network:hover,
+#battery:hover,
+#cpu:hover,
+#memory:hover,
+#temperature:hover {
+  transition: all 0.3s ease;
+  color: @red_ember;
+}
+#custom-notification {
+  padding: 0px 5px;
+  transition: all 0.3s ease;
+  color: @fg;
+}
+#clock {
+  padding: 0px 5px;
+  color: @fg;
+  transition: all 0.3s ease;
+}
+#custom-pacman {
+  padding: 0px 5px;
+  transition: all 0.3s ease;
+  color: @fg;
+}
+#workspaces {
+  padding: 0px 5px;
+}
+#workspaces button {
+  all: unset;
+  padding: 0px 5px;
+  color: alpha(@red_ember, 0.4);
+  transition: all 0.2s ease;
+}
+#workspaces button:hover {
+  color: rgba(0, 0, 0, 0);
+  border: none;
+  text-shadow: 0px 0px 1.5px rgba(0, 0, 0, 0.5);
+  transition: all 1s ease;
+}
+#workspaces button.active {
+  color: @red_ember;
+  border: none;
+  text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+}
+#workspaces button.empty {
+  color: rgba(0, 0, 0, 0);
+  border: none;
+  text-shadow: 0px 0px 1.5px rgba(0, 0, 0, 0.2);
+}
+#workspaces button.empty:hover {
+  color: rgba(0, 0, 0, 0);
+  border: none;
+  text-shadow: 0px 0px 1.5px rgba(0, 0, 0, 0.5);
+  transition: all 1s ease;
+}
+#workspaces button.empty.active {
+  color: @red_ember;
+  border: none;
+  text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+}
+#bluetooth {
+  padding: 0px 5px;
+  transition: all 0.3s ease;
+  color: @fg;
+}
+#network {
+  padding: 0px 5px;
+  transition: all 0.3s ease;
+  color: @fg;
+}
+#battery {
+  padding: 0px 5px;
+  transition: all 0.3s ease;
+  color: @fg;
+}
+#battery.charging {
+  color: #26a65b;
+}
+
+#battery.warning:not(.charging) {
+  color: #ffbe61;
+}
+
+#battery.critical:not(.charging) {
+  color: #f53c3c;
+  animation-name: blink;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+#group-expand {
+  padding: 0px 5px;
+  transition: all 0.3s ease;
+}
+#custom-expand {
+  padding: 0px 5px;
+  color: alpha(@fg, 0.2);
+  text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.7);
+  transition: all 0.3s ease;
+}
+#custom-expand:hover {
+  color: rgba(255, 255, 255, 0.2);
+  text-shadow: 0px 0px 2px rgba(255, 255, 255, 0.5);
+}
+#custom-colorpicker {
+  padding: 0px 5px;
+}
+#cpu,
+#memory,
+#temperature {
+  padding: 0px 5px;
+  transition: all 0.3s ease;
+  color: @fg;
+}
+#pulseaudio {
+  padding: 0px 5px;
+  transition: all 0.3s ease;
+  color: @fg;
+  font-weight: normal;
+  font-family: "Google Sans Code", "Symbols Nerd Font";
+}
+#pulseaudio:hover {
+  transition: all 0.3s ease;
+  color: @red_ember;
+}
+#custom-endpoint {
+  color: transparent;
+  text-shadow: 0px 0px 1.5px rgba(0, 0, 0, 1);
+}
+#tray {
+  padding: 0px 5px;
+  transition: all 0.3s ease;
+}
+#tray menu * {
+  padding: 0px 5px;
+  transition: all 0.3s ease;
+}
+
+#tray menu separator {
+  padding: 0px 5px;
+  transition: all 0.3s ease;
+}

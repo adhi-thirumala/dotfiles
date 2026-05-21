@@ -1,0 +1,138 @@
+{
+        "layer": "top",
+        "position": "top",
+        "reload_style_on_change": true,
+        "modules-left": ["custom/window", "custom/endpoint", "custom/mpris"],
+        "modules-center": ["niri/workspaces"],
+        "modules-right": ["custom/archlinux", "custom/endpoint", "cpu", "custom/endpoint", "memory", "custom/endpoint", "temperature", "custom/endpoint", "network", "custom/endpoint", "pulseaudio", "custom/endpoint", "battery", "custom/endpoint", "clock"],
+
+        "custom/window": {
+            "exec": "~/.config/waybar/scripts/scroll-window.sh",
+            "tooltip": false
+        },
+        "custom/archlinux": {
+            "format": " {}",
+        },
+
+        "niri/workspaces": {
+            "format": "{icon}",
+            "format-icons": {
+                "active": "",
+                "default": "",
+                "empty": ""
+            },
+            "persistent-workspaces": {
+                "*": [ 1,2,3,4,5 ]
+            }
+        },
+        "custom/notification": {
+            "tooltip": false,
+            "format": "",
+            "on-click": "swaync-client -t -sw",
+            "escape": true
+        },
+        "clock": {
+            "format": "{:%a, %b %e, %Y %I:%M:%S %p}",
+            "interval": 1,   
+            "tooltip-format": "<tt>{calendar}</tt>",
+            "calendar": {
+                "format": {
+                    "today": "<span color='#fAfBfC'><b>{}</b></span>"
+                }
+            },
+            "actions": {
+                "on-click-right": "shift_down",
+                "on-click": "shift_up"
+            }
+        },
+        "network": {
+            "format-wifi": "Wifi {essid} ({signalStrength}%)",
+            "format-ethernet":"Ethernet",
+            "format-disconnected": "Disconnected",
+            "tooltip-format-disconnected": "Disconnected",
+            "tooltip-format-ethernet": "{ifname}",
+            "on-click": "kitty --single-instance impala"
+        },
+        "bluetooth": {
+            "format-on": "󰂯",
+            "format-off": "BT-off",
+            "format-disabled": "󰂲",
+            "format-connected-battery": "{device_battery_percentage}% 󰂯",
+            "format-alt": "{device_alias} 󰂯",
+            "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+            "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+            "tooltip-format-enumerate-connected": "{device_alias}\n{device_address}",
+            "tooltip-format-enumerate-connected-battery": "{device_alias}\n{device_address}\n{device_battery_percentage}%",
+            "on-click-right": "blueman-manager",
+        }, 
+        "battery": {
+            "interval":30,
+            "states": {
+                "good": 95,
+                "warning": 30,
+                "critical": 20
+            },
+            "format": "Battery {capacity}%",
+            "format-charging": "Charging {capacity}%",
+            "format-plugged": "Plugged {capacity}%",
+            "format-alt": "{time} {icon}",
+            "format-icons": [
+                "󰁻",
+            "󰁼",
+            "󰁾",
+            "󰂀",
+            "󰂂",
+            "󰁹"
+            ],
+        },
+        "custom/pacman": {
+            "format": "󰅢 {}",
+            "interval": 30,   
+            "exec": "checkupdates | wc -l",
+            "exec-if": "exit 0",
+            "on-click": "kitty sh -c 'paru -Syu; pkill -SIGRTMIN+8 waybar",
+            "signal": 8,
+            "tooltip": false,
+        },
+        "custom/endpoint":{
+            "format": " | ",
+            "tooltip": false
+        },
+        "group/expand": {
+            "orientation": "horizontal",
+            "drawer": {
+                "transition-duration": 600,
+                "transition-to-left": true,
+                "click-to-reveal": true
+            },
+            "modules": ["custom/expand", "custom/colorpicker","cpu","memory","temperature","custom/endpoint"],
+        },
+        "cpu": {
+            "format": "CPU {usage}%",
+            "tooltip": true
+        },
+        "memory": {
+            "format": "Mem {used} GiB"
+        },
+        "temperature": {
+            "critical-threshold": 80,
+            "format": "Temp {temperatureC}°C"
+        },
+        "tray": {
+            "icon-size": 14,
+            "spacing": 10
+        },
+        "pulseaudio": {
+            "format": "Vol {volume}%",
+            "format-muted": "Vol Muted", 
+            "scroll-step": 1,
+            "on-click": "pavucontrol",
+            "ignored-sinks": ["Easy Effects Sink"]
+        },
+        "custom/mpris": {
+            "exec": "~/.config/waybar/scripts/scroll-mpris.sh",
+            "on-click": "playerctl play-pause",
+            "tooltip": false
+        }
+} 
+

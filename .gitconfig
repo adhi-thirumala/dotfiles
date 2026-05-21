@@ -1,0 +1,21 @@
+[init]
+	defaultBranch = main
+[user]
+	name = Adhi Thirumala
+    email = me@adhithirumala.com
+    signingkey = 9EA60094AB56CE3A
+[pull]
+	rebase = false
+[gpg]
+    format = openpgp
+ 	program = /usr/bin/gpg
+[commit]
+	gpgsign = true
+[tag]
+	gpgSign = true
+[merge "mergiraf"]
+	name = mergiraf
+    driver = mergiraf merge --git %O %A %B -s %S -x %X -y %Y -p %P -l %L
+    conflictstyle = "diff3"
+[rerere]
+	enabled = true

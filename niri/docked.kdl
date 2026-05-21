@@ -1,0 +1,20 @@
+// Docked mode: eGPU (Nvidia) is plugged in.
+// niri renders on the Nvidia render node so DP-11 is zero-copy.
+// Internal panel is turned off.
+
+output "eDP-1" {
+    off
+}
+
+output "DP-11" {
+    mode "2560x1440@143.999"
+    variable-refresh-rate
+}
+
+// Render on the Nvidia eGPU (PCI 0000:05:00.0, renderD129).
+// Using the by-path symlink because it's stable across reboots/replugs.
+debug {
+    render-drm-device "/dev/dri/by-path/pci-0000:05:00.0-render"
+    disable-cursor-plane
+    wait-for-frame-completion-before-queueing //egpu nonsense
+}
