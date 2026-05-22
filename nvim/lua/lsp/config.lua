@@ -115,6 +115,12 @@ cmp.setup.cmdline(':', {
 -- Set up lspconfig.
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
+vim.diagnostic.config({
+    virtual_text = false,
+})
+
+
+
 -- code actions to g .
 vim.keymap.set('n', 'g.', function()
     return '<Cmd>lua vim.lsp.buf.code_action()<CR>'
