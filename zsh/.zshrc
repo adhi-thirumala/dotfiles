@@ -6839,4 +6839,5 @@ alias cbr="cargo build --release"
 alias ctr="cargo test --release"
 alias crr="cargo run --release"
 alias cch="cargo check"
+alias oc=opencode
 eval "$(direnv hook zsh)"

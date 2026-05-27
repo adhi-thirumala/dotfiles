@@ -34,7 +34,7 @@ return {
             end,
             desc = "Agentic Restore session",
             silent = true,
-            mode = { "n", "v", "i" },
+            mode = { "n", "v" },
         },
         {
             "<leader>ad", -- ai Diagnostics

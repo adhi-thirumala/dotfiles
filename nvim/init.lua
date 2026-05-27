@@ -1,5 +1,5 @@
 require("config.keymaps")
 require("config.opts")
 require("config.lazy")
-require("lsp.config")
+require("lsp.nvim-lspconfig")
 require("ai.config")

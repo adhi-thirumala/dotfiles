@@ -2,8 +2,10 @@ return {
   "ficcdaf/ashen.nvim",
   lazy = false,
   priority = 1000,
-  -- configuration is optional!
   opts = {
-    -- your settings here
   },
+  config = function(_, opts)
+    require("ashen").setup(opts)
+    vim.cmd('colorscheme ashen')
+  end,
 }

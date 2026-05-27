@@ -17,9 +17,9 @@ local function check_and_disable_codeium()
 end
 
 -- Run check on startup
-check_and_disable_codeium()
+-- check_and_disable_codeium()
 
 -- Also check when directory changes
-vim.api.nvim_create_autocmd("DirChanged", {
-    callback = check_and_disable_codeium,
-})
+-- vim.api.nvim_create_autocmd("DirChanged", {
+--  callback = check_and_disable_codeium,
+-- })
