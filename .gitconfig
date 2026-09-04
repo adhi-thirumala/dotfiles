@@ -1,7 +1,7 @@
 [init]
 	defaultBranch = main
 [user]
-	name = adhi
+	name = Adhi Thirumala
     email = me@adhithirumala.com
     signingkey = 9EA60094AB56CE3A
 [pull]
