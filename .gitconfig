@@ -1,7 +1,7 @@
 [init]
 	defaultBranch = main
 [user]
-	name = Adhi Thirumala
+	name = adhi
     email = me@adhithirumala.com
     signingkey = 9EA60094AB56CE3A
 [pull]
@@ -19,3 +19,9 @@
     conflictstyle = "diff3"
 [rerere]
 	enabled = true
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential

@@ -1,9 +1,51 @@
 #!/usr/bin/env bash
 set -euo pipefail
-cd ~/.config/niri
+
+niri_dir="${XDG_CONFIG_HOME:-$HOME/.config}/niri"
+egpu_pci="0000:64:00.0"
+egpu_render="/dev/dri/by-path/pci-${egpu_pci}-render"
+
+finish_switch() {
+    if [[ -n "${NIRI_SOCKET:-}" ]] && niri msg action quit; then
+        return
+    fi
+
+    echo "Profile selected. Start niri again to apply it."
+}
+
+cd "$niri_dir"
 case "${1:-}" in
-    docked) ln -sfn docked.kdl mode.kdl; echo "Switched to docked. Restarting niri..."; niri msg action quit ;;
-    mobile) ln -sfn mobile.kdl mode.kdl; echo "Switched to mobile. Restarting niri..."; niri msg action quit ;;
+    docked)
+        if [[ ! -e "$egpu_render" ]] || ! nvidia-smi >/dev/null 2>&1; then
+            echo "Cannot switch to docked: the NVIDIA eGPU is not ready." >&2
+            echo "Expected a working GPU at $egpu_render." >&2
+            exit 1
+        fi
+
+        shopt -s nullglob
+        connector_statuses=(/sys/bus/pci/devices/"$egpu_pci"/drm/card*/card*/status)
+        display_connected=false
+        for status in "${connector_statuses[@]}"; do
+            if [[ $(<"$status") == "connected" ]]; then
+                display_connected=true
+                break
+            fi
+        done
+
+        if [[ "$display_connected" != true ]]; then
+            echo "Cannot switch to docked: no display is connected to the NVIDIA eGPU." >&2
+            exit 1
+        fi
+
+        ln -sfn docked.kdl mode.kdl
+        echo "Switched to docked."
+        finish_switch
+        ;;
+    mobile)
+        ln -sfn mobile.kdl mode.kdl
+        echo "Switched to mobile."
+        finish_switch
+        ;;
     status) readlink mode.kdl ;;
     *) echo "usage: niri-mode {docked|mobile|status}"; exit 1 ;;
 esac

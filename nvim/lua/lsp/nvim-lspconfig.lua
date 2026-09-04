@@ -62,11 +62,18 @@ vim.lsp.config('ocamllsp', {
 vim.filetype.add({
     extension = {
         mli = 'ocamlinterface',
+        capnp = 'capnp',
         mll = 'ocamllex',
         mly = 'menhir',
         re = 'reason',
         rei = 'reason',
     },
+})
+vim.lsp.config('capnp_ls', {
+    cmd = { 'capnp-ls', '--stdio' },
+    filetypes = { 'capnp' },
+    root_markers = { '.capnp-ls.json', '.git' },
+    capabilities = capabilities,
 })
 
 vim.lsp.config('oxlint', {
@@ -82,6 +89,7 @@ vim.lsp.config('vtsls', {
         client.server_capabilities.documentRangeFormattingProvider = false
     end,
 })
+vim.lsp.enable('capnp_ls')
 
 vim.lsp.enable('ty')
 vim.lsp.enable('ruff')

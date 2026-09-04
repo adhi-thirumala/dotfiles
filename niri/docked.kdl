@@ -11,10 +11,10 @@ output "DP-11" {
     variable-refresh-rate
 }
 
-// Render on the Nvidia eGPU (PCI 0000:05:00.0, renderD129).
-// Using the by-path symlink because it's stable across reboots/replugs.
+// Render on the Nvidia eGPU (PCI 0000:64:00.0, renderD129).
+// Using the PCI by-path avoids unstable card/render node numbering.
 debug {
-    render-drm-device "/dev/dri/by-path/pci-0000:05:00.0-render"
+    render-drm-device "/dev/dri/by-path/pci-0000:64:00.0-render"
     disable-cursor-plane
     wait-for-frame-completion-before-queueing //egpu nonsense
 }

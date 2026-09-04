@@ -6840,4 +6840,10 @@ alias ctr="cargo test --release"
 alias crr="cargo run --release"
 alias cch="cargo check"
 alias oc=opencode
+alias iwc="iwctl station wlan0 connect"
+alias iwdc="iwctl station wlan0 disconnect"
+alias iws="iwctl station wlan0 scan on"
+alias iwg="iwctl station wlan0 get-networks"
 eval "$(direnv hook zsh)"
+source .ai.env
+
