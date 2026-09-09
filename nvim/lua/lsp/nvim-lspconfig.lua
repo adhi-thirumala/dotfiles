@@ -70,7 +70,7 @@ vim.filetype.add({
     },
 })
 vim.lsp.config('capnp_ls', {
-    cmd = { 'capnp-ls', '--stdio' },
+    cmd = { 'capnprotols' },
     filetypes = { 'capnp' },
     root_markers = { '.capnp-ls.json', '.git' },
     capabilities = capabilities,
