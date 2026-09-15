@@ -6845,5 +6845,5 @@ alias iwdc="iwctl station wlan0 disconnect"
 alias iws="iwctl station wlan0 scan on"
 alias iwg="iwctl station wlan0 get-networks"
 eval "$(direnv hook zsh)"
-source .ai.env
+source ~/.ai.env
 

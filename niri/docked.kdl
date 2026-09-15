@@ -1,14 +1,20 @@
-// Docked mode: eGPU (Nvidia) is plugged in.
-// niri renders on the Nvidia render node so DP-11 is zero-copy.
-// Internal panel is turned off.
+// Docked mode: niri renders every output on the Nvidia eGPU.
+// The external monitor scans out on Nvidia without a cross-GPU copy.
+// The internal panel remains available; only that output crosses to the AMD iGPU.
 
 output "eDP-1" {
-    off
+    // Limit the cross-GPU copy to 60 Hz to reduce Thunderbolt bandwidth.
+    mode "2880x1920@60.001"
+    scale 1
+    position x=0 y=0
 }
 
-output "DP-11" {
+output "Acer Technologies XV272U 0x0261CFDB" {
     mode "2560x1440@143.999"
+    scale 1
+    position x=2880 y=0
     variable-refresh-rate
+    focus-at-startup
 }
 
 // Render on the Nvidia eGPU (PCI 0000:64:00.0, renderD129).

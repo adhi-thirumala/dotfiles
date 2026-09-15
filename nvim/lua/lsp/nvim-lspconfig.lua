@@ -67,8 +67,19 @@ vim.filetype.add({
         mly = 'menhir',
         re = 'reason',
         rei = 'reason',
+        y = "yacc",
+        yy = "yacc",
+        ypp = "yacc",
+        bison = "yacc",
+
+        l = "lex",
+        ll = "lex",
+        lex = "lex",
+        flex = "lex",
+
     },
 })
+
 vim.lsp.config('capnp_ls', {
     cmd = { 'capnprotols' },
     filetypes = { 'capnp' },
@@ -89,8 +100,35 @@ vim.lsp.config('vtsls', {
         client.server_capabilities.documentRangeFormattingProvider = false
     end,
 })
-vim.lsp.enable('capnp_ls')
 
+
+vim.lsp.config("bison_flex", {
+    cmd = { "bison-flex-lsp" },
+
+    filetypes = {
+        "yacc",
+        "lex",
+    },
+
+    get_language_id = function(_, filetype)
+        if filetype == "yacc" then
+            return "bison"
+        elseif filetype == "lex" then
+            return "flex"
+        end
+
+        return filetype
+    end,
+
+    root_markers = {
+        ".git",
+        "CMakeLists.txt",
+        "Makefile",
+    },
+})
+
+vim.lsp.enable("bison_flex")
+vim.lsp.enable('capnp_ls')
 vim.lsp.enable('ty')
 vim.lsp.enable('ruff')
 vim.lsp.enable('lua_ls')
@@ -105,3 +143,6 @@ vim.lsp.enable('oxlint')
 vim.lsp.enable('oxfmt')
 vim.lsp.enable('hls')
 vim.lsp.enable('gopls')
+vim.lsp.enable('bashls')
+vim.lsp.enable('buf_ls')
+vim.lsp.enable("bison_flex")

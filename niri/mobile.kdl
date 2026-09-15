@@ -1,6 +1,6 @@
-// Mobile mode: niri renders on the iGPU (AMD).
-// Both eDP-1 and DP-11 are active when DP-11 happens to be plugged in.
-// No render-drm-device override; niri picks the iGPU by default.
+// Mobile mode: niri renders on the AMD iGPU.
+// An eGPU-connected external display requires a cross-GPU copy in this mode;
+// switch to the docked profile before using that display.
 
 // You can configure outputs by their name, which you can find
 // by running `niri msg outputs` while inside a niri instance.
@@ -17,7 +17,7 @@ output "eDP-1" {
     // for the resolution.
     // If the mode is omitted altogether or is invalid, niri will pick one automatically.
     // Run `niri msg outputs` while inside a niri instance to list all outputs and their modes.
-    mode "2880x1920@120.030"
+    mode "2880x1920@120.000"
 
     // VRR on the internal panel; on-demand keeps it off unless content asks for it.
     variable-refresh-rate on-demand=true
@@ -46,9 +46,9 @@ output "eDP-1" {
     }
 }
 
-output "DP-11" {
-    mode "2560x1440@143.999"
-    variable-refresh-rate
+// Keep eGPU outputs off while the AMD iGPU is the renderer.
+output "Acer Technologies XV272U 0x0261CFDB" {
+    off
 }
 
 // eGPU/Thunderbolt perf workarounds. Safe to keep on iGPU too.
