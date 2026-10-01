@@ -562,4 +562,6 @@ binds {
     Mod+Shift+P { power-off-monitors; }
 
     Ctrl+Alt+Shift+L { spawn "swaylock"; }
+
+    Mod+B { spawn "helium-browser"; }
 }

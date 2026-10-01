@@ -2,12 +2,14 @@
         "layer": "top",
         "position": "top",
         "reload_style_on_change": true,
-        "modules-left": ["custom/window", "custom/endpoint", "custom/mpris"],
+        "modules-left": ["custom/left-status"],
         "modules-center": ["niri/workspaces"],
         "modules-right": ["custom/archlinux", "custom/endpoint", "cpu", "custom/endpoint", "memory", "custom/endpoint", "temperature", "custom/endpoint", "network", "custom/endpoint", "pulseaudio", "custom/endpoint", "battery", "custom/endpoint", "clock"],
 
-        "custom/window": {
-            "exec": "~/.config/waybar/scripts/scroll-window.sh",
+        "custom/left-status": {
+            "exec": "~/.config/waybar/scripts/scroll-left-status.sh",
+            "return-type": "json",
+            "on-click": "playerctl play-pause",
             "tooltip": false
         },
         "custom/archlinux": {
@@ -129,10 +131,5 @@
             "on-click": "pavucontrol",
             "ignored-sinks": ["Easy Effects Sink"]
         },
-        "custom/mpris": {
-            "exec": "~/.config/waybar/scripts/scroll-mpris.sh",
-            "on-click": "playerctl play-pause",
-            "tooltip": false
-        }
 } 
 

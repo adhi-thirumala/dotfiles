@@ -28,7 +28,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 vim.keymap.set('n', '<Leader>f', vim.lsp.buf.format, { desc = 'Format buffer' })
 vim.keymap.set('n', 'g.', vim.lsp.buf.code_action, { desc = 'Code action' })
-vim.keymap.set('n', '<leader>k', '<Cmd>Telescope diagnostics<CR>', { desc = 'Diagnostics' })
+vim.keymap.set('n', '<leader>k', vim.diagnostic.setqflist, { desc = 'Diagnostics list' })
 vim.keymap.set('n', '<leader>m', function()
     vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = 0 }), { bufnr = 0 })
 end, { desc = 'Toggle LSP Inlay Hints' })
@@ -67,16 +67,6 @@ vim.filetype.add({
         mly = 'menhir',
         re = 'reason',
         rei = 'reason',
-        y = "yacc",
-        yy = "yacc",
-        ypp = "yacc",
-        bison = "yacc",
-
-        l = "lex",
-        ll = "lex",
-        lex = "lex",
-        flex = "lex",
-
     },
 })
 
@@ -102,32 +92,6 @@ vim.lsp.config('vtsls', {
 })
 
 
-vim.lsp.config("bison_flex", {
-    cmd = { "bison-flex-lsp" },
-
-    filetypes = {
-        "yacc",
-        "lex",
-    },
-
-    get_language_id = function(_, filetype)
-        if filetype == "yacc" then
-            return "bison"
-        elseif filetype == "lex" then
-            return "flex"
-        end
-
-        return filetype
-    end,
-
-    root_markers = {
-        ".git",
-        "CMakeLists.txt",
-        "Makefile",
-    },
-})
-
-vim.lsp.enable("bison_flex")
 vim.lsp.enable('capnp_ls')
 vim.lsp.enable('ty')
 vim.lsp.enable('ruff')
@@ -145,4 +109,3 @@ vim.lsp.enable('hls')
 vim.lsp.enable('gopls')
 vim.lsp.enable('bashls')
 vim.lsp.enable('buf_ls')
-vim.lsp.enable("bison_flex")

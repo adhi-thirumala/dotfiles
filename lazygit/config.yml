@@ -1,7 +1,7 @@
 git:
   diffRenderers:
     - colorArg: always
-      command: diff-so-fancy
+      command: /usr/bin/delta --dark --side-by-side --paging=never --line-numbers --hyperlinks --hyperlinks-file-link-format="lazygit-edit://{path}:{line}"
 os:
   editCommand: 'nvim'
   editCommandTemplate: '{{editor}} --server /tmp/nvim-server.pipe --remote-tab "$(pwd)/{{filename}}"'
